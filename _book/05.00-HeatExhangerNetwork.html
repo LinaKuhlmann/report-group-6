@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Report Summary">
+
+<title>Final report – Advanced Energetics - 5&nbsp; Heat Exchanger Network design</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./06.00-Utilityintegration.html" rel="next">
+<link href="./04.00-HeatRecovery.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="https://web2018.epfl.ch/2.0.0/icons/epfl-logo.svg" alt="EPFL | IPESE" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Final report – Advanced Energetics</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools ms-auto">
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./05.00-HeatExhangerNetwork.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Heat Exchanger Network design</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Abstract</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01.00-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Group 6/F: Process Integration and Optimization for a Dairy Factory</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02.00-process_description.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Process description and analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03.00-energy_bill.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Exergy analysis and Energy bill</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04.00-HeatRecovery.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Pinch analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05.00-HeatExhangerNetwork.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Heat Exchanger Network design</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06.00-Utilityintegration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Energy conversion integration</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-Conclusions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Conclusions</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#identification-of-penalizing-heat-exchangers" id="toc-identification-of-penalizing-heat-exchangers" class="nav-link active" data-scroll-target="#identification-of-penalizing-heat-exchangers"><span class="header-section-number">5.1</span> Identification of Penalizing Heat Exchangers</a>
+  <ul class="collapse">
+  <li><a href="#pasteurisation" id="toc-pasteurisation" class="nav-link" data-scroll-target="#pasteurisation"><span class="header-section-number">5.1.1</span> Pasteurisation</a></li>
+  <li><a href="#evaporation" id="toc-evaporation" class="nav-link" data-scroll-target="#evaporation"><span class="header-section-number">5.1.2</span> Evaporation</a></li>
+  <li><a href="#drum-dryers" id="toc-drum-dryers" class="nav-link" data-scroll-target="#drum-dryers"><span class="header-section-number">5.1.3</span> Drum Dryers</a></li>
+  <li><a href="#cleaning-in-place" id="toc-cleaning-in-place" class="nav-link" data-scroll-target="#cleaning-in-place"><span class="header-section-number">5.1.4</span> Cleaning in Place</a></li>
+  <li><a href="#rivella-production" id="toc-rivella-production" class="nav-link" data-scroll-target="#rivella-production"><span class="header-section-number">5.1.5</span> Rivella Production</a></li>
+  <li><a href="#digester" id="toc-digester" class="nav-link" data-scroll-target="#digester"><span class="header-section-number">5.1.6</span> Digester</a></li>
+  </ul></li>
+  <li><a href="#application-of-pinch-design-method" id="toc-application-of-pinch-design-method" class="nav-link" data-scroll-target="#application-of-pinch-design-method"><span class="header-section-number">5.2</span> Application of Pinch Design Method</a>
+  <ul class="collapse">
+  <li><a href="#path-following-methods" id="toc-path-following-methods" class="nav-link" data-scroll-target="#path-following-methods"><span class="header-section-number">5.2.1</span> Path following methods</a></li>
+  <li><a href="#loop-method" id="toc-loop-method" class="nav-link" data-scroll-target="#loop-method"><span class="header-section-number">5.2.2</span> Loop Method</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Heat Exchanger Network design</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i></button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>After establishing the minimum energy requirement, the primary objective of heat exchanger network design is to strategically position heat exchangers within the process to attain the heat recovery target. This involves identifying the hot and cold streams for heat exchange, specifying the flow rates on both sides of the heat exchanger, and determining the optimal sizing for each heat exchanger to be integrated into the system.</p>
+<p>Your reports should include the following aspects:</p>
+<section id="identification-of-penalizing-heat-exchangers" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="identification-of-penalizing-heat-exchangers"><span class="header-section-number">5.1</span> Identification of Penalizing Heat Exchangers</h2>
+<!--Identify and list the heat exchangers that have the greatest impact on the energy penalty. Conversely, define a list of non-penalizing heat exchangers that require no modification. By removing the streams involved, establish subsets of hot and cold streams for which the heat exchanger network (interconnected heat exchangers) needs to be designed.-->
+<p>Thanks to the pinch analysis effectuated in the previous section it is possible to identify penalizing heat exchangers. There are four types of penalizing heat exchangers: - A cold utility cooling down a hot stream above the pinch - A hot utility heating up a cold stream below the pinch - A heat exchanger heating up a cold stream under the pinch using a hot stream above the pinch - A mixer where the fluids it is mixing are not on the same side of the pinch point, i.e.&nbsp;the cooler fluid intake is below the pinch and the warmer fluid intake is above the pinch</p>
+<p>Thanks to having calculated the pinch point at 67.5 °C in the previous section, it is now easy to find the penalizing heat exchangers in each section.</p>
+<p>Furthermore, it is possible to calculate the penalty caused by each penalizing heat exchanger, as it is simply the amount of heat utilized by said exchanger.</p>
+<p>The Wastewater and sludge production section will be skipped as it does not utilize any heat exchangers.</p>
+<p>ASK IF PENALIZING EXCHANGERS ARE CORRECT; IS IT PENALIZING IF ONE STREAM CROSSES THE PINCH POINT; IE COLD STREAM GOES FROM 50 TO 80</p>
+<section id="pasteurisation" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="pasteurisation"><span class="header-section-number">5.1.1</span> Pasteurisation</h3>
+<div class="cell" data-execution_count="1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display, HTML</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>past_pen <span class="op">=</span> {<span class="st">'Exchangers'</span>: [<span class="st">'Refrigeration'</span>, <span class="st">'Past1'</span>, <span class="st">'Past2'</span>, <span class="st">'Past3'</span>, <span class="st">'Past4'</span>, <span class="st">'Past5'</span>, <span class="st">'Past6'</span>, <span class="st">'Past7'</span>, <span class="st">'Mixer'</span>],</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Penalizing'</span>: [<span class="st">'Not Penalizing'</span>, <span class="st">'Penalizing'</span>, <span class="st">'Penalizing'</span>, <span class="st">'Penalizing'</span>, <span class="st">'Not Penalizing'</span>, <span class="st">'Penalizing'</span>, <span class="st">'Penalizing'</span>, <span class="st">'Penalizing'</span>, <span class="st">'Not Penalizing'</span>],</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Penalty (kW)'</span>: [<span class="st">'0'</span>, <span class="st">'1691.65'</span>, <span class="st">'142.88'</span>, <span class="st">'285.76'</span>, <span class="st">'0'</span>, <span class="st">'17.52'</span>, <span class="st">'35.61'</span>, <span class="st">'127'</span>, <span class="st">'0'</span>]}</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(past_pen)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.set_index(<span class="st">'Exchangers'</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.<span class="bu">round</span>(<span class="dv">2</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>HTML(df.to_html())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Penalizing</th>
+<th data-quarto-table-cell-role="th">Penalty (kW)</th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Exchangers</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Refrigeration</td>
+<td>Not Penalizing</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Past1</td>
+<td>Penalizing</td>
+<td>1691.65</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Past2</td>
+<td>Penalizing</td>
+<td>142.88</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Past3</td>
+<td>Penalizing</td>
+<td>285.76</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Past4</td>
+<td>Not Penalizing</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Past5</td>
+<td>Penalizing</td>
+<td>17.52</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Past6</td>
+<td>Penalizing</td>
+<td>35.61</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Past7</td>
+<td>Penalizing</td>
+<td>127</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Mixer</td>
+<td>Not Penalizing</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="evaporation" class="level3" data-number="5.1.2">
+<h3 data-number="5.1.2" class="anchored" data-anchor-id="evaporation"><span class="header-section-number">5.1.2</span> Evaporation</h3>
+<p>TO BE CORRECTED ONCE THE EVAPORATION SECTION IS CORRECTED</p>
+<p>The evaporators are equivalent to mixers.</p>
+<div class="cell" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>evap_pen <span class="op">=</span> {<span class="st">'Exchangers'</span>: [<span class="st">'P1'</span>, <span class="st">'P2'</span>, <span class="st">'P3'</span>, <span class="st">'P4'</span>, <span class="st">'P5'</span>, <span class="st">'Evap1'</span>, <span class="st">'Evap2'</span>, <span class="st">'Evap3'</span>],</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Penalizing'</span>: [<span class="st">'Not Penalizing'</span>, <span class="st">'Not Penalizing'</span>, <span class="st">'Not Penalizing'</span>, <span class="st">'Not Penalizing'</span>, <span class="st">'Penalizing'</span>, <span class="st">'Penalizing'</span>, <span class="st">'Not Penalizing'</span>, <span class="st">'Not Penalizing'</span>],</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Penalty (kW)'</span>: [<span class="st">'0'</span>, <span class="st">'0'</span>, <span class="st">'0'</span>, <span class="st">'0'</span>, <span class="st">'98.04'</span>, <span class="st">'453.44'</span>, <span class="st">'0'</span>, <span class="st">'0'</span>]}</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(evap_pen)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.set_index(<span class="st">'Exchangers'</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>HTML(df.to_html())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Penalizing</th>
+<th data-quarto-table-cell-role="th">Penalty (kW)</th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Exchangers</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">P1</td>
+<td>Not Penalizing</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">P2</td>
+<td>Not Penalizing</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">P3</td>
+<td>Not Penalizing</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">P4</td>
+<td>Not Penalizing</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">P5</td>
+<td>Penalizing</td>
+<td>98.04</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Evap1</td>
+<td>Penalizing</td>
+<td>453.44</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Evap2</td>
+<td>Not Penalizing</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Evap3</td>
+<td>Not Penalizing</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="drum-dryers" class="level3" data-number="5.1.3">
+<h3 data-number="5.1.3" class="anchored" data-anchor-id="drum-dryers"><span class="header-section-number">5.1.3</span> Drum Dryers</h3>
+<div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dryer_pen <span class="op">=</span> {<span class="st">'Exchangers'</span>: [<span class="st">'Dryer 1'</span>, <span class="st">'Dryer 2'</span>, <span class="st">'DDHEX-1'</span>, <span class="st">'DDHEX-2'</span>, <span class="st">'Cooling Water'</span>],</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Penalizing'</span>: [<span class="st">'Not Penalizing'</span>, <span class="st">'Penalizing'</span>, <span class="st">'Penalizing'</span>, <span class="st">'Not Penalizing'</span>, <span class="st">'Not Penalizing'</span>],</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Penalty (kW)'</span>: [<span class="st">'0'</span>, <span class="st">'67.08'</span>, <span class="st">'0.11'</span>, <span class="st">'0'</span>, <span class="st">'0'</span>]}</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(dryer_pen)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.set_index(<span class="st">'Exchangers'</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>HTML(df.to_html())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Penalizing</th>
+<th data-quarto-table-cell-role="th">Penalty (kW)</th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Exchangers</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Dryer 1</td>
+<td>Not Penalizing</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Dryer 2</td>
+<td>Penalizing</td>
+<td>67.08</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">DDHEX-1</td>
+<td>Penalizing</td>
+<td>0.11</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">DDHEX-2</td>
+<td>Not Penalizing</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Cooling Water</td>
+<td>Not Penalizing</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="cleaning-in-place" class="level3" data-number="5.1.4">
+<h3 data-number="5.1.4" class="anchored" data-anchor-id="cleaning-in-place"><span class="header-section-number">5.1.4</span> Cleaning in Place</h3>
+<div class="cell" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>CIP_pen <span class="op">=</span> {<span class="st">'Exchangers'</span>: [<span class="st">'Mixer'</span>, <span class="st">'CIP-HEX'</span>, <span class="st">'Shower-1'</span>, <span class="st">'Shower-2'</span>, <span class="st">'Cooling Water'</span>],</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Penalizing'</span>: [<span class="st">'Penalizing'</span>, <span class="st">'Penalizing'</span>, <span class="st">'Penalizing'</span>, <span class="st">'Penalizing'</span>, <span class="st">'Penalizing'</span>],</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Penalty (kW)'</span>: [<span class="st">'175.81'</span>, <span class="st">'334.72'</span>, <span class="st">'41.84'</span>, <span class="st">'41.84'</span>, <span class="st">'225.94'</span>]}</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(CIP_pen)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.set_index(<span class="st">'Exchangers'</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>HTML(df.to_html())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Penalizing</th>
+<th data-quarto-table-cell-role="th">Penalty (kW)</th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Exchangers</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Mixer</td>
+<td>Penalizing</td>
+<td>175.81</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">CIP-HEX</td>
+<td>Penalizing</td>
+<td>334.72</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Shower-1</td>
+<td>Penalizing</td>
+<td>41.84</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Shower-2</td>
+<td>Penalizing</td>
+<td>41.84</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Cooling Water</td>
+<td>Penalizing</td>
+<td>225.94</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="rivella-production" class="level3" data-number="5.1.5">
+<h3 data-number="5.1.5" class="anchored" data-anchor-id="rivella-production"><span class="header-section-number">5.1.5</span> Rivella Production</h3>
+<p>R-Mixer1 and R-Mixer2 are ignored because there is no heat exchange occurring in these mixers.</p>
+<div class="cell" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>riv_pen <span class="op">=</span> {<span class="st">'Exchangers'</span>: [<span class="st">'Fermentation'</span>, <span class="st">'Evaporator'</span>, <span class="st">'R-HEX1'</span>, <span class="st">'R-Mixer3'</span>, <span class="st">'Green Rivella HEX'</span>, <span class="st">'R-Mixer4'</span>, <span class="st">'Red Rivella HEX'</span>],</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Penalizing'</span>: [<span class="st">'Not Penalizing'</span>, <span class="st">'Penalizing'</span>, <span class="st">'Penalizing'</span>, <span class="st">'Not Penalizing'</span>, <span class="st">'Not Penalizing'</span>, <span class="st">'Not Penalizing'</span>, <span class="st">'Not Penalizing'</span>],</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Penalty (kW)'</span>: [<span class="st">'0'</span>, <span class="st">'579.42'</span>, <span class="st">'40.11'</span>, <span class="st">'0'</span>, <span class="st">'0'</span>, <span class="st">'0'</span>, <span class="st">'0'</span>]}</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(riv_pen)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.set_index(<span class="st">'Exchangers'</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>HTML(df.to_html())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Penalizing</th>
+<th data-quarto-table-cell-role="th">Penalty (kW)</th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Exchangers</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Fermentation</td>
+<td>Not Penalizing</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Evaporator</td>
+<td>Penalizing</td>
+<td>579.42</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">R-HEX1</td>
+<td>Penalizing</td>
+<td>40.11</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">R-Mixer3</td>
+<td>Not Penalizing</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Green Rivella HEX</td>
+<td>Not Penalizing</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">R-Mixer4</td>
+<td>Not Penalizing</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Red Rivella HEX</td>
+<td>Not Penalizing</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="digester" class="level3" data-number="5.1.6">
+<h3 data-number="5.1.6" class="anchored" data-anchor-id="digester"><span class="header-section-number">5.1.6</span> Digester</h3>
+<div class="cell" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dig_pen <span class="op">=</span> {<span class="st">'Exchangers'</span>: [<span class="st">'Digestor'</span>, <span class="st">'Steam Dryer'</span>],</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Penalizing'</span>: [<span class="st">'Not Penalizing'</span>, <span class="st">'Penalizing'</span>],</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Penalty (kW)'</span>: [<span class="st">'0'</span>, <span class="st">'28.75'</span>]}</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(dig_pen)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.set_index(<span class="st">'Exchangers'</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>HTML(df.to_html())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Penalizing</th>
+<th data-quarto-table-cell-role="th">Penalty (kW)</th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Exchangers</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Digestor</td>
+<td>Not Penalizing</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Steam Dryer</td>
+<td>Penalizing</td>
+<td>28.75</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<section id="application-of-pinch-design-method" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="application-of-pinch-design-method"><span class="header-section-number">5.2</span> Application of Pinch Design Method</h2>
+<p>Determine the composite curves and identify the pinch point for each subset. This step also helps define the list of utility streams to be considered for the heat exchanger network design.</p>
+<p>Implement the pinch design method to generate a network configuration. With each heat exchanger placement, calculate the heat exchanged, flow rates, temperature conditions, size, and corresponding cost. Utilize loop and path following techniques to attempt the elimination of small heat exchangers. Evaluate the trade-off between cost (changes in the energy bill) and benefits (investment) in this process.</p>
+<section id="path-following-methods" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="path-following-methods"><span class="header-section-number">5.2.1</span> Path following methods</h3>
+<p>…</p>
+</section>
+<section id="loop-method" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="loop-method"><span class="header-section-number">5.2.2</span> Loop Method</h3>
+<p>…</p>
+<blockquote class="blockquote">
+<p>Don’t forget that we have provided examples in the guide book.</p>
+</blockquote>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./04.00-HeatRecovery.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Pinch analysis</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./06.00-Utilityintegration.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Energy conversion integration</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+ <a class="logo" href="https://ipese.epfl.ch"><img alt="IPESE" height="100px" src="https://ipese-lectures.epfl.ch/static/ipese-logo-black.svg"></a>
+  </li>  
+</ul>
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+ © 2023 - Industrial Process and Energy Systems Engineering (IPESE)
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+</body></html>
